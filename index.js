@@ -1,6 +1,3 @@
-const sudokuGrid = document.getElementById('sudoku-grid')
-
-
 function crateSudokuArr(){
     return [
         [1,null,null,null,null,null,null,null,null],
@@ -14,22 +11,16 @@ function crateSudokuArr(){
         [null,null,null,null,null,null,null,null,null],
     ]
 }
-
 function createGrid(rowNum, colNum, gridElement, arr){
-    let cellPointer = 0
     for(let i = 0; i< rowNum*colNum;i++){
         const col = parseInt(i/colNum)
+        const cellNum =  parseInt(i) - (col* 9)
         const div = document.createElement('div')
         div.className = 'gridCell'
 
         const input = document.createElement('input')
-        input.value = arr[col][cellPointer]
-        input.addEventListener('input',(event) => onChange(event, col, cellPointer, input))
-
-        if(cellPointer % 8 === 0) {
-            cellPointer = 0
-        }
-        cellPointer++
+        input.value = arr[col][cellNum]
+        input.addEventListener('input',(event) => {onChange(event, col, cellNum, input)})
         if(sudokuGrid){
             div.appendChild(input)
             gridElement.appendChild(div)
@@ -43,9 +34,11 @@ function onChange(event, colNum, cellNum, input){
     if(isNaN(parsedData) || parsedValue > 9 || parsedValue < 1){
         return input.value = mainArr[colNum][cellNum]
     }
-
-    mainArr[colNum][cellNum] = event.data
+    console.log(colNum,cellNum)
+    mainArr[colNum][cellNum] = parseInt(event.data)
+    console.log(mainArr)
 }
 
+const sudokuGrid = document.getElementById('sudoku-grid')
 const mainArr = crateSudokuArr()
 createGrid(9,9, sudokuGrid, mainArr)
