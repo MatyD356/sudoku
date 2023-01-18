@@ -14,7 +14,7 @@ function crateSudokuArr(){
 function createGrid(rowNum, colNum, gridElement, arr){
     for(let i = 0; i< rowNum*colNum;i++){
         const col = parseInt(i/colNum)
-        const cellNum =  parseInt(i) - (col* 9)
+        const cellNum =  i - col* 9
         const div = document.createElement('div')
         div.className = 'gridCell'
 
@@ -30,13 +30,10 @@ function createGrid(rowNum, colNum, gridElement, arr){
 function onChange(event, colNum, cellNum, input){
     const parsedData = event.data ? parseInt(event.data) : null
     const parsedValue = parseInt(event.target.value)
-
     if(isNaN(parsedData) || parsedValue > 9 || parsedValue < 1){
         return input.value = mainArr[colNum][cellNum]
     }
-    console.log(colNum,cellNum)
     mainArr[colNum][cellNum] = parseInt(event.data)
-    console.log(mainArr)
 }
 
 const sudokuGrid = document.getElementById('sudoku-grid')
